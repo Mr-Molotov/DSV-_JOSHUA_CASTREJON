@@ -1,26 +1,4 @@
 <?php
-// Archivo: clases.php
-
-class Tarea {
-    public $id;
-    public $titulo;
-    public $descripcion;
-    public $estado;
-    public $prioridad;
-    public $fechaCreacion;
-    public $tipo;
-
-    public function __construct($datos) {
-        foreach ($datos as $key => $value) {
-            $this->$key = $value;
-        }
-    }
-
-    // Implementar estos getters
-    // public function getEstado() { }
-    // public function getPrioridad() { }
-}
-
 class GestorTareas {
     private $tareas = [];
 
@@ -34,6 +12,8 @@ class GestorTareas {
         
         return $this->tareas;
     }
+
+    
 }
 
 // Implementar:
