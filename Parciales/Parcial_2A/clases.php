@@ -11,11 +11,12 @@ abstract class Entrada implements Detalles
 
     abstract public function obtenerDetallesEspecificos(): string;
 
-    public function __construct($id, $create_date, $type)
-    {
-        $this->$id = $id;
-        $this->$create_date = $create_date;
-        $this->$type = $type;
+    public function __construct($datos = []) {
+        foreach ($datos as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
     }
 
     public function getId(){
