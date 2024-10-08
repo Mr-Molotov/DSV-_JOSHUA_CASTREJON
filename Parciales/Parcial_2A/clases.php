@@ -93,8 +93,90 @@ class EntradaTresColumna extends Entrada{
 }
 
 class GestorBlog {
-    
+    private $entradas = [];
+
+    public function cargarEntradas() {
+        if (file_exists('blog.json')) {
+            $json = file_get_contents('blog.json');
+            $data = json_decode($json, true);
+            foreach ($data as $entradaData) {
+                $this->entradas[] = new Entrada($entradaData);
+            }
+        }
+    }
+
+    public function guardarEntradas() {
+        $data = array_map(function($entrada) {
+            return get_object_vars($entrada);
+        }, $this->entradas);
+        file_put_contents('blog.json', json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function obtenerEntradas() {
+        return $this->entradas;
+    }
+
+    // Método para agregar una nueva entrada
+    public function agregarEntrada(Entrada $entrada) {
+        $this->entradas[$entrada->id] = $entrada;
+    }
+
+    // Método para editar una entrada existente
+    public function editarEntrada(Entrada $entrada) {
+        if (isset($this->entradas[$entrada->id])) {
+            $this->entradas[$entrada->id] = $entrada;
+        } else {
+            echo "Entrada no encontrada.\n";
+        }
+    }
+
+    // Método para eliminar una entrada por su ID
+    public function eliminarEntrada($id) {
+        if (isset($this->entradas[$id])) {
+            unset($this->entradas[$id]);
+        } else {
+            echo "Entrada no encontrada.\n";
+        }
+    }
+
+    // Método para obtener una entrada específica por su ID
+    public function obtenerEntrada($id) {
+        if (isset($this->entradas[$id])) {
+            return $this->entradas[$id];
+        } else {
+            echo "Entrada no encontrada.\n";
+            return null;
+        }
+    }
+
+    // Método para mover una entrada hacia arriba o abajo en la lista
+    public function moverEntrada($id, $direccion) {
+        if (!isset($this->entradas[$id])) {
+            echo "Entrada no encontrada.\n";
+            return;
+        }
+
+        $keys = array_keys($this->entradas);
+        $index = array_search($id, $keys);
+
+        if ($direccion === 'arriba' && $index > 0) {
+            $temp = $keys[$index - 1];
+            $keys[$index - 1] = $keys[$index];
+            $keys[$index] = $temp;
+        } elseif ($direccion === 'abajo' && $index < count($keys) - 1) {
+            $temp = $keys[$index + 1];
+            $keys[$index + 1] = $keys[$index];
+            $keys[$index] = $temp;
+        } else {
+            echo "Movimiento no válido.\n";
+            return;
+        }
+
+        $this->entradas = array_merge(array_flip($keys), $this->entradas);
+    }
 }
+
+
 
 
 
