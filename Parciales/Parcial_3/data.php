@@ -2,8 +2,8 @@
 // Credenciales de usuarios: Nombre de usuario => Contraseña
 $usuarios = [
     "profesor" => ["password" => "prof123", "role" => "profesor"],
-    "alumno1" => ["password" => "alumno123", "role" => "estudiante", "grade" => 85],
-    "alumno2" => ["password" => "alumno456", "role" => "estudiante", "grade" => 92],
-    "alumno3" => ["password" => "alumno789", "role" => "estudiante", "grade" => 78]
+    "Juan" => ["password" => "papad1ll4", "role" => "estudiante", "grade" => 75],
+    "Carlo" => ["password" => "p1n0ch0", "role" => "estudiante", "grade" => 89],
+    "Juana" => ["password" => "lorenz", "role" => "estudiante", "grade" => 91]
 ];
 ?>
