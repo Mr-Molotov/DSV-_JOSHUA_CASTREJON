@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $datos = [];
 
     // Procesar y validar cada campo
-    $campos = ['nombre', 'email', 'edad', 'sitio_web', 'genero', 'intereses', 'comentarios'];
+    $campos = ['nombre', 'email', 'edad', 'sitioWeb', 'genero', 'intereses', 'comentarios'];
     foreach ($campos as $campo) {
         if (isset($_POST[$campo])) {
             $valor = $_POST[$campo];
