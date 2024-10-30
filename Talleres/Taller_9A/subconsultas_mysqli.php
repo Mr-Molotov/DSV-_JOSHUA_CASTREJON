@@ -17,8 +17,8 @@ $result = mysqli_query($conn, $sql);
 if ($result) {
     echo "<h3>Productos con precio mayor al promedio de su categoría:</h3>";
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "Producto: {$row['nombre']}, Precio: ${$row['precio']}, ";
-        echo "Categoría: {$row['categoria']}, Promedio categoría: ${$row['promedio_categoria']}<br>";
+        echo "Producto: {$row['nombre']}, Precio: {$row['precio']}, ";
+        echo "Categoría: {$row['categoria']}, Promedio categoría: {$row['promedio_categoria']}<br>";
     }
     mysqli_free_result($result);
 }
@@ -42,11 +42,14 @@ $result = mysqli_query($conn, $sql);
 if ($result) {
     echo "<h3>Clientes con compras superiores al promedio:</h3>";
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "Cliente: {$row['nombre']}, Total compras: ${$row['total_compras']}, ";
-        echo "Promedio general: ${$row['promedio_ventas']}<br>";
+        echo "Cliente: {$row['nombre']}, Total compras: {$row['total_compras']}, ";
+        echo "Promedio general: {$row['promedio_ventas']}<br>";
     }
     mysqli_free_result($result);
 }
+
+//3. Inventario excedente
+$sql = "SELECT p.nombre, p.categoria_id"
 
 mysqli_close($conn);
 ?>
