@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule ^index$ index.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^search$ search.php [L]
+RewriteRule ^library$ library.php [L]
+RewriteRule ^review$ review.php [L]
