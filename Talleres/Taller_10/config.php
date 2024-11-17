@@ -1,5 +1,5 @@
 <?php
-define('GITHUB_TOKEN', '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');
+define('GITHUB_TOKEN', 'el token fue eliminado por razones de seguridad');
 define('GITHUB_API_URL', 'https://api.github.com');
 define('USER_AGENT', 'PHP GitHub API Client');
 
