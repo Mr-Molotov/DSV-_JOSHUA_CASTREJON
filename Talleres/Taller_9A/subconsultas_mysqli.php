@@ -79,46 +79,46 @@ if ($result) {
 }
 
 //5.Encontrar los clientes que han comprado todos los productos de una categoría específica.
-$categoria_id = 2;
-$sql = "SELECT c.id, c.nombre as Cliente
+$categoria_id = 1; // ID de la categoría a analizar (puede ser dinámico)
+$sql = "SELECT DISTINCT c.nombre 
         FROM clientes c
         JOIN ventas v ON c.id = v.cliente_id
         JOIN detalles_venta dv ON v.id = dv.venta_id
         JOIN productos p ON dv.producto_id = p.id
-        WHERE p.categoria_id = ?
+        WHERE p.categoria_id = $categoria_id
         GROUP BY c.id
         HAVING COUNT(DISTINCT p.id) = (
-            SELECT COUNT(*)
-            FROM productos
-        WHERE categoria_id = ?)";
+            SELECT COUNT(*) 
+            FROM productos 
+            WHERE categoria_id = $categoria_id
+        )";
+
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
-    echo "<h3>Lista de los clientes que han comprado todos los productos de una categoría específica.:</h3>";
+    echo "<h3>Clientes que han comprado todos los productos de la categoría ID {$categoria_id}:</h3>";
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "Cliente: " . $row["nombre"] . "<br>";
+        echo "Cliente: {$row['nombre']}<br>";
     }
     mysqli_free_result($result);
 }
 
 //6.Calcular el porcentaje de ventas de cada producto respecto al total de ventas.
-$sql = "SELECT p.nombre AS Producto,
-            SUM(dv.subtotal) AS Ventas_Producto,
-            (SUM(dv.subtotal) / (SELECT SUM(subtotal) FROM detalles_venta) * 100) AS Porcentaje_Ventas
+$sql = "SELECT p.nombre AS producto,
+            SUM(dv.subtotal) AS ventas_producto,
+            (SUM(dv.subtotal) / (SELECT SUM(subtotal) FROM detalles_venta) * 100) AS porcentaje_ventas
         FROM productos p
         JOIN detalles_venta dv ON p.id = dv.producto_id
         GROUP BY p.id";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
-    echo "<h3>Lista del porcentaje de ventas de cada producto respecto al total de ventas:</h3>";
+    echo "<h3>Porcentaje de ventas de cada producto respecto al total de ventas:</h3>";
     while ($row = mysqli_fetch_assoc($result)) {
-        echo "Producto: " . $row["nombre"] . " - Porcentaje de ventas: " . $row["porcentaje_ventas"] . "%<br>";
+        echo "Producto: {$row['producto']}, Total ventas: $" . "{$row['ventas_producto']}, Porcentaje: " . round($row['porcentaje_ventas'], 2) . "%<br>";
     }
     mysqli_free_result($result);
 }
-
-
 mysqli_close($conn);
 ?>
         
